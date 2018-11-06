@@ -16,7 +16,7 @@ const HeaderUser = ({ menu }) => {
                         <a href="#email"><span className="white-text email">saaibiflorezhernandez@gmail.com</span></a>
                     </div>
                 </li>
-                <li><Link to="/clients" className="waves-effect" ><i className="material-icons">business_center</i>Account</Link></li>
+                <li><Link to="/accounts" className="waves-effect" ><i className="material-icons">business_center</i>Account</Link></li>
                 <li><Link to="/users"><i className="material-icons">group</i>Usuarios</Link></li>
                 <li><Link to="/login"><i className="material-icons">system_update_alt</i>Logout</Link></li>
             </ul>
@@ -25,7 +25,7 @@ const HeaderUser = ({ menu }) => {
     if (menu === "nav") {
         return (
             < ul className="right hide-on-med-and-down" >
-                <li><Link to="/clients">Account</Link></li>
+                <li><Link to="/accounts">Account</Link></li>
                 <li><Link to="/users">Users</Link></li>
                 <li><Link to="/login">Logout</Link></li>
             </ul >

@@ -42,12 +42,10 @@ class AppLogin extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
-    return {
-        loggingIn: state.authentication,
-        registering: state.authentication
-    };
-};
+const mapStateToProps = (state) => ({
+    loggingIn: state.authentication,
+    registering: state.authentication
+});
+
 const connectedAppLogin = connect(mapStateToProps)(AppLogin);
 export { connectedAppLogin as AppLogin }; 

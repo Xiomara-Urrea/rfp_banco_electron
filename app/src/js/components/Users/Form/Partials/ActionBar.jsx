@@ -8,7 +8,7 @@ const ActionBar = (props) => (
 		<div className="input-field col s6 align-center">
 			<Save
 				className="waves-effect waves-light blue lighten-1 btn"
-				texto="Save"
+				texto="Guardar"
 				icon="send"
 				classNameIcon="right"
 				onClick={props.createUsers}
@@ -17,7 +17,7 @@ const ActionBar = (props) => (
 		<div className="input-field col s6 align-center">
 			<Clean
 				className="waves-effect waves-light blue lighten-1 btn"
-				texto="Clear"
+				texto="Limpiar"
 				icon="delete_sweep"
 				classNameIcon="right"
 			/>

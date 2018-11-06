@@ -38,9 +38,10 @@ const login = (username, password) => {
         try {
             const user = await makeRequestAsync(`/users/login`, "POST", userAut);
             dispatch(success(user.data.user));
-            localStorage.setItem('user', JSON.stringify(user));
-            history.push('/clients');
+            localStorage.setItem('user', JSON.stringify(user.data.user));
+            history.push('/accounts');
         } catch (error) {
+            M.toast({ html: `Username or password is incorrect`, classes: 'rounded' });
             const message = error.message || error;
             dispatch(failure({ error: message }));
         }

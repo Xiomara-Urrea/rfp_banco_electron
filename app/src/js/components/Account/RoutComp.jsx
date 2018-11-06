@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
 import AppHeader from '../AppHeader';
-import Client from '.';
+import Account from '.';
 
-class AppClient extends Component {
+class AppAccount extends Component {
 	render() {
 		return (
 			<div className="container">
 				<AppHeader name="ACCOUNTS" />
-				<Client />
+				<Account />
 			</div>
 		);
 	}
 }
 
-export { AppClient };
+export { AppAccount };

@@ -11,7 +11,7 @@ const ActionBar = (props) => (
 				texto="Save"
 				icon="send"
 				classNameIcon="right"
-				onClick={props.createClient}
+				onClick={props.createAccount}
 			/>
 		</div>
 		<div className="input-field col s6 align-center">

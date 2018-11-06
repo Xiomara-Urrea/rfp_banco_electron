@@ -6,7 +6,6 @@ import { clientActions } from "../../actions/client.actions";
 import Form from './Form';
 import Grid from './Grid';
 import Edit from './Edit';
-import Modal from '../Common/Modal';
 import Progress from '../Common/Utils/Progress';
 
 class Users extends Component {

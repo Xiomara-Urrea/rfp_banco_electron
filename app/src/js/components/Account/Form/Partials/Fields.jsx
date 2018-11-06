@@ -5,37 +5,25 @@ import StateAccount from '../../../Common/Input';
 import ValueAccount from '../../../Common/Input';
 
 const Fields = (props) => (
-
 	<div>
-
 		<NumberAccount
-			id="NumberAccount"
-			name="NumberAccount"
+			id="numberAccount"
+			name="numberAccount"
 			text="Numero De La Cuenta"
 			autoFocus={true}
 			icon="credit_card"
 			classNameIcon="prefix"
-			onChange={props.loadClient}
-		/>
-
-		<StateAccount
-			id="StateAccount"
-			name="StateAccount"
-			text="Estado De La Cuenta"
-			icon="chrome_reader_mode"
-			classNameIcon="prefix"
-			onChange={props.loadClient}
+			onChange={props.loadAccount}
 		/>
 
 		<ValueAccount
-			id="ValueAccount"
-			name="ValueAccount"
+			id="valueAccount"
+			name="valueAccount"
 			text="Valor De La cuenta"
 			icon="attach_money"
 			classNameIcon="prefix"
-			onChange={props.loadClient}
+			onChange={props.loadAccount}
 		/>
-
 	</div>
 );
 
