@@ -53,53 +53,6 @@ const logout = () => {
     return { type: LOGOUT.SUCCESS };
 }
 
-
-const login2 = (username, password) => {
-    const request = (user) => { return { type: LOGIN.REQUEST, user } }
-    const success = (user) => { return { type: LOGIN.SUCCESS, user } }
-    const failure = (error) => { return { type: LOGIN.FAILURE, error } }
-
-    return dispatch => {
-        dispatch(request({ username }));
-        // logger.log('holaaaaaa');
-        userService.login(username, password)
-            .then(
-                user => {
-                    dispatch(success(user));
-                    history.push('/clients');
-                },
-                error => {
-                    dispatch(failure(error));
-                }
-            );
-    };
-
-
-}
-
-
-const register2 = (user) => {
-    const request = (user) => { return { type: REGISTER.REQUEST, user } }
-    const success = (user) => { return { type: REGISTER.SUCCESS, user } }
-    const failure = (error) => { return { type: REGISTER.FAILURE, error } }
-    return dispatch => {
-        dispatch(request(user));
-
-        userService.register(user)
-            .then(
-                user => {
-                    dispatch(success());
-                    history.push('/login');
-                },
-                error => {
-                    dispatch(failure(error));
-                }
-            );
-    };
-
-
-}
-
 const getAll = () => {
     const request = () => { return { type: USERS_GETALL.REQUEST } }
     const success = (users) => { return { type: USERS_GETALL.SUCCESS, users } }

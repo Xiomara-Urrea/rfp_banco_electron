@@ -16,9 +16,9 @@
   },
   "keywords": [
     "test",
-    "BANCO"
+    "Banco"
   ],
-  "author": "Xiomara y Samuel",
+  "author": "Xiomara,Samuel,Anngi,Moises",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",

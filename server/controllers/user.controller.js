@@ -57,13 +57,13 @@ userController.login = async (req, res) => {
 };
 
 userController.updateUser = async (req, res) => {
-    // const { firstName, lastName } = req.body;
-    // const clientUpdate = { firstName, lastName };
+    const { firstName, lastName } = req.body;
+    const clientUpdate = { firstName, lastName };
 
-    // await User.findByIdAndUpdate(req.params.id, clientUpdate, { new: true }, (err, user) => {
-    //     if (err) return res.json({ error: err });
-    //     res.json({ status: "User Updated", user });
-    // });
+    await User.findByIdAndUpdate(req.params.id, clientUpdate, { new: true }, (err, user) => {
+        if (err) return res.json({ error: err });
+        res.json({ status: "User Updated", user });
+    });
 
 };
 

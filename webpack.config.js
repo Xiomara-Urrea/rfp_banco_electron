@@ -6,6 +6,7 @@ const autoprefixer = require("autoprefixer")();
 
 // > Root App
 const APP_FOLDER = path.resolve(__dirname, './app');
+
 // > Dist
 const DIST_FOLDER = path.resolve(APP_FOLDER, './dist');
 const DIST_FOLDER_STYLE = path.resolve(DIST_FOLDER, './style');
