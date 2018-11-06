@@ -6,6 +6,7 @@ const accountController = require('../controllers/acount.controller');
 
 router.get('/', accountController.getAllAccount);
 router.get('/:id', accountController.getByIdAccount);
+router.post('/', accountController.createAccount);
 router.put('/:id', accountController.updateAccount);
 router.put('/:id/consign', accountController.updateAccountConsign);
 router.put('/:id/retire', accountController.updateAccountRetire);

@@ -10,7 +10,11 @@ const UserSchema = new Schema({
     phone: { type: Number, required: true },
     email: { type: String, required: true },
     user_id: { type: String, required: true },
-    accounts: [{ type: Schema.Types.ObjectId, ref: 'Account' }]
+    accounts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Account',
+        default: []
+    }]
 },
     {
         versionKey: false,

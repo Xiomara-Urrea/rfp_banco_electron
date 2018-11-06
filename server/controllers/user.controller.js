@@ -18,24 +18,13 @@ userController.getByIdUserAccount = async (req, res) => {
     res.json(user);
 };
 
-//  Credit.schema.pre
 userController.createUser = async (req, res) => {
     const { firstName, lastName, username, password, user_id, email, phone } = req.body;
-    const accountModelOne = new Account({});
-    const accountModelTwo = new Account({});
-
-    await accountModelOne.save((err) => {
-        if (err) return (res.json({ error: err }));
-    });
-    await accountModelTwo.save((err) => {
-        if (err) return (res.json({ error: err }));
-    });
-
-    const accountArray = [accountModelOne, accountModelTwo];
 
     const user = new User({
-        firstName, lastName, username, password, user_id, email, phone, accounts: accountArray,
+        firstName, lastName, username, password, user_id, email, phone,
     });
+
     await user.save((err, user) => {
         if (err) return res.json({ error: err });
         res.json({ status: "User Saved", user });
@@ -57,14 +46,24 @@ userController.login = async (req, res) => {
 };
 
 userController.updateUser = async (req, res) => {
-    const { firstName, lastName } = req.body;
-    const clientUpdate = { firstName, lastName };
+    const { } = req.body;
+    const userUpdate = {}
 
-    await User.findByIdAndUpdate(req.params.id, clientUpdate, { new: true }, (err, user) => {
+    await User.findByIdAndUpdate(req.params.id, userUpdate, { new: true }, (err, user) => {
         if (err) return res.json({ error: err });
         res.json({ status: "User Updated", user });
     });
 
+};
+
+userController.updateUserAccount = async (user_id, account) => {
+    await User.findByIdAndUpdate(user_id,
+        { "$push": { "accounts": account } },
+        { "new": true, "upsert": true }, (err, user) => {
+            if (err) throw err;
+            console.log("#########", user);
+        }
+    );
 };
 
 // Pending Review

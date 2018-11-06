@@ -1,4 +1,5 @@
 const Account = require("../models/account");
+const User = require("../models/user");
 
 const accountController = {};
 
@@ -12,19 +13,37 @@ accountController.getByIdAccount = async (req, res) => {
     res.json(account);
 };
 
+accountController.createAccount = async (req, res) => {
+    const { numberAccount, stateAccount, valueAccount, user_id } = req.body;
+    
+    const accountModel = new Account({
+        numberAccount, stateAccount, valueAccount
+    });
+
+    await accountModel.save((err, account) => {
+        if (err) return res.json({ error: err });
+        if (account) {
+            User.findByIdAndUpdate(user_id,
+                { "$push": { "accounts": accountModel } },
+                { "new": true, "upsert": true }, (err, user) => {
+                    if (err) throw err;
+                }
+            );
+        }
+        res.json({ status: "Account Saved", account });
+    });
+};
+
 // query = { _id: req.params.id };
-// console.log(moment(credit.startDate).format("DD/MM/YYYY HH:mm"))
 accountController.updateAccount = async (req, res) => {
-    const { addCredit, valueCredit, endDate, startDate } = req.body;
-    const creditUpdate = {
-        addCredit: addCredit,
-        valueCredit: valueCredit,
-        startDate: Date(startDate),
-        endDate: Date(endDate)
+    const { } = req.body;
+    const accountUpdate = {
+
     };
+
     const options = { new: true, runValidators: true };
 
-    await Account.findByIdAndUpdate(req.params.id, creditUpdate, options, (err, account) => {
+    await Account.findByIdAndUpdate(req.params.id, accountUpdate, options, (err, account) => {
         if (err) return res.json({ error: err });
         res.json({ status: "Account Updated", account });
     });
