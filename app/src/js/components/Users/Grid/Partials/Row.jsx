@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { clienActions, clientActions } from "../../../../actions/client.actions";
+import { clientActions } from "../../../../actions/account.actions";
 
 import ActionBarGrid from './ActionBarGrid';
 

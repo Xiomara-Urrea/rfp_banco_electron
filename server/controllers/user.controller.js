@@ -37,7 +37,6 @@ userController.login = async (req, res) => {
 
     await User.findOne({ username, password }, (err, user) => {
         if (err) return res.json({ error: err });
-        console.log(user)
         if (user)
             res.json({ status: "User Logged", user });
         else

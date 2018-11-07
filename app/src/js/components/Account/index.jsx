@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { clientActions } from "../../actions/client.actions";
+import { accountActions } from "../../actions/account.actions";
+import { userActions } from "../../actions/user.actions";
 
 import Form from './Form';
 import Grid from './Grid';
@@ -17,24 +18,31 @@ class Account extends Component {
 			numberAccount: "",
 			stateAccount: true,
 			valueAccount: "",
-		}
+			user_id: ""
+		},
 	}
 
 	componentWillMount() {
-		this.props.dispatch(clientActions.getAllClient());
+		console.log(this.props.user._id)
+		this.props.dispatch(userActions.getByIdAccount(this.props.user._id));
+	}
+
+	componentDidMount() {
+		const { account } = this.state;
+		account.user_id = this.props.user._id ;
+		this.setState({ account });
 	}
 
 	componentWillReceiveProps(newProps) {
-		// const { clientEdit } = this.state;
-		// clientEdit.firstName = newProps.client.firstName;
-		// clientEdit.lastName = newProps.client.lastName;
+		// const { account } = this.state;
+		// account.firstName = newProps.client.firstName;
+		// account.lastName = newProps.client.lastName;
 		// this.setState({ clientEdit });
 	}
 
 	createAccount = (e) => {
 		e.preventDefault();
-		console.log(this.state.account)
-		this.props.dispatch();
+		this.props.dispatch(accountActions.createAccount(this.state.account));
 	}
 
 	updateAccount = (e) => {
@@ -53,12 +61,11 @@ class Account extends Component {
 	}
 
 	render() {
-		const { clients, client, clientCredit } = this.props;
-
-		if (clients.isLoading) {
-			if (!clients.clients) {
+		const { users } = this.props;
+		if (users.isLoading) {
+			if (!users.accounts) {
 				return (
-					<Progress type="circle" />
+					<p>Loading....</p>
 				)
 			}
 		}
@@ -69,7 +76,7 @@ class Account extends Component {
 					<Form createAccount={this.createAccount} loadAccount={this.loadAccount} />
 				</div>
 				<div className="col s12 m8 l9">
-					<Grid clients={clients.clients} optionsClient={this.optionsClient} />
+					<Grid accounts={users.accounts} optionsAccount={this.optionsAccount} />
 				</div>
 			</div>
 		);
@@ -77,11 +84,9 @@ class Account extends Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state.authentication.user)
 	return {
-		clients: state.client,
-		client: state.client.client,
-		clientCredit: state.client.clientCredit,
+		user: state.authentication.user,
+		users: state.users,
 	}
 };
 

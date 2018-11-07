@@ -27,6 +27,7 @@ accountController.createAccount = async (req, res) => {
                 { "$push": { "accounts": accountModel } },
                 { "new": true, "upsert": true }, (err, user) => {
                     if (err) throw err;
+                    console.log(user)
                 }
             );
         }

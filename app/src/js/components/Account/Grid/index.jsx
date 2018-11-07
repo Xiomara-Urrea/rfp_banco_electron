@@ -5,11 +5,11 @@ import Columns from './Partials/Columns';
 import Rows from './Partials/Rows';
 
 const Grid = (props) => {
-	const { clients, optionsClient } = props;
+	const { accounts, optionsAccount } = props;
 	return (
 		<table className="striped centered">
 			<Columns />
-			<Rows clients={clients} optionsClient={optionsClient} />
+			<Rows accounts={accounts} optionsAccount={optionsAccount} />
 		</table>
 	);
 }

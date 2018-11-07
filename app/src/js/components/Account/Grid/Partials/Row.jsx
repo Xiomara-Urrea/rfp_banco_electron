@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { clienActions, clientActions } from "../../../../actions/client.actions";
+import { clientActions } from "../../../../actions/account.actions";
 
 import ActionBarGrid from './ActionBarGrid';
 
@@ -37,14 +37,14 @@ class Row extends Component {
 		this.props.optionsClient(data)
 	}
 	render() {
-		const { client } = this.props;
+		const { account } = this.props;
 		return (
 			<tr>
-				<td>{client.firstName}</td>
-				<td>{client.lastName}</td>
+				<td>{account.numberAccount}</td>
+				<td>{account.valueAccount}</td>
 				<td>
 					<ActionBarGrid
-						id={client._id}
+						id={account._id}
 						onEdit={this.onEdit}
 						onDelete={this.onDelete}
 						onView={this.onView}
@@ -60,4 +60,4 @@ const mapStateToProps = (state) => ({
 	svgArr: state.client.clients[0].credit
 });
 
-export default connect(mapStateToProps)(Row);
+export default connect()(Row);

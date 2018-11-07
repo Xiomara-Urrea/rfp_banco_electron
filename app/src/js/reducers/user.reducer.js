@@ -1,44 +1,44 @@
-import { USERS_GETALL, USERS_DELETE } from '../constants/user.constans';
+import { USERS_GETALL, USERS_DELETE, USERS_ACCOUNT_GETBYID } from '../constants/user.constans';
+import { ACCOUNT_CREATE } from '../constants/account.constans';
 
-export function users(state = {}, action) {
-  switch (action.type) {
+const initialState = {
+  users: [],
+  accounts: [],
+  isLoading: false,
+  error: '',
+};
+
+
+export function users(state = initialState, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case USERS_ACCOUNT_GETBYID.REQUEST:
+    case USERS_ACCOUNT_GETBYID.FAILURE:
     case USERS_GETALL.REQUEST:
-      return {
-        loading: true
-      };
     case USERS_GETALL.SUCCESS:
-      return {
-        items: action.users
-      };
     case USERS_GETALL.FAILURE:
-      return {
-        error: action.error
-      };
     case USERS_GETALL.REQUEST:
-      return {
-        ...state,
-        items: state.items.map(user =>
-          user.id === action.id
-            ? { ...user, deleting: true }
-            : user
-        )
-      };
     case USERS_DELETE.SUCCESS:
-      return {
-        items: state.items.filter(user => user.id !== action.id)
-      };
     case USERS_DELETE.FAILURE:
       return {
         ...state,
-        items: state.items.map(user => {
-          if (user.id === action.id) {
-            const { deleting, ...userCopy } = user;
-            return { ...userCopy, deleteError: action.error };
-          }
-
-          return user;
-        })
+        ...payload,
       };
+    case USERS_ACCOUNT_GETBYID.SUCCESS: {
+      const { accounts } = payload;
+      console.log("object", payload)
+      return {
+        ...state,
+        ...payload
+      };
+    }
+    case ACCOUNT_CREATE.SUCCESS: {
+      const { account } = payload;
+      return {
+        ...state,
+        accounts: [...state.accounts, account]
+      };
+    }
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { clientActions } from "../../actions/client.actions";
+import { clientActions } from "../../actions/account.actions";
 
 import Form from './Form';
 import Grid from './Grid';

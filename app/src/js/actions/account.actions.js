@@ -1,11 +1,11 @@
 import findIndex from 'lodash/findIndex'
 import { makeRequestAsync } from '../services'
-import { CLIENT_GET, CLIENT_GETBYID, CLIENT_CREATE, CLIENT_UPDATE, CLIENT_DELETE , CLIENT_CREDIT_GETBYID } from '../constants/client.constans';
+import { ACCOUNT_GET, ACCOUNT_GETBYID, ACCOUNT_CREATE, ACCOUNT_UPDATE, ACCOUNT_DELETE } from '../constants/account.constans';
 
 
-const getAllClient = () => {
+const getAllAccounts = () => {
     const request = () => ({
-        type: CLIENT_GET.REQUEST,
+        type: ACCOUNT_GET.REQUEST,
         payload: {
             clients: [],
             isLoading: true,
@@ -14,7 +14,7 @@ const getAllClient = () => {
     });
 
     const success = clients => ({
-        type: CLIENT_GET.SUCCESS,
+        type: ACCOUNT_GET.SUCCESS,
         payload: {
             clients,
             isLoading: false,
@@ -23,7 +23,7 @@ const getAllClient = () => {
     });
 
     const failure = error => ({
-        type: CLIENT_GET.FAILURE,
+        type: ACCOUNT_GET.FAILURE,
         payload: {
             isLoading: true,
             error,
@@ -44,7 +44,7 @@ const getAllClient = () => {
 
 const getById = (id) => {
     const request = () => ({
-        type: CLIENT_GETBYID.REQUEST,
+        type: ACCOUNT_GETBYID.REQUEST,
         payload: {
             isLoading: true,
             error: '',
@@ -52,7 +52,7 @@ const getById = (id) => {
     });
 
     const success = client => ({
-        type: CLIENT_GETBYID.SUCCESS,
+        type: ACCOUNT_GETBYID.SUCCESS,
         payload: {
             client,
             isLoading: false,
@@ -61,7 +61,7 @@ const getById = (id) => {
     });
 
     const failure = error => ({
-        type: CLIENT_GETBYID.FAILURE,
+        type: ACCOUNT_GETBYID.FAILURE,
         payload: {
             isLoading: false,
             error,
@@ -80,26 +80,26 @@ const getById = (id) => {
     };
 };
 
-const getByIdCredit = (id) => {
+const createAccount = (accountCreate) => {
     const request = () => ({
-        type: CLIENT_CREDIT_GETBYID.REQUEST,
+        type: ACCOUNT_CREATE.REQUEST,
         payload: {
             isLoading: true,
             error: '',
         },
     });
 
-    const success = clientCredit => ({
-        type: CLIENT_CREDIT_GETBYID.SUCCESS,
+    const success = account => ({
+        type: ACCOUNT_CREATE.SUCCESS,
         payload: {
-            clientCredit,
+            account,
             isLoading: false,
             error: '',
         },
     });
 
     const failure = error => ({
-        type: CLIENT_CREDIT_GETBYID.FAILURE,
+        type: ACCOUNT_CREATE.FAILURE,
         payload: {
             isLoading: false,
             error,
@@ -109,8 +109,9 @@ const getByIdCredit = (id) => {
     return async (dispatch, getState) => {
         dispatch(request());
         try {
-            const clientCredit = await makeRequestAsync(`/clients/${id}/credit`, "GET");
-            dispatch(success(clientCredit.data));
+            const account = await makeRequestAsync(`/accounts`, "POST", accountCreate);
+            dispatch(success(account.data.account));
+            M.toast({html: `${account.data.status}`, classes: 'rounded'});
         } catch (error) {
             const message = error.message || error;
             dispatch(failure({ error: message }));
@@ -118,51 +119,10 @@ const getByIdCredit = (id) => {
     };
 };
 
-
-
-const createClient = (clientCreate) => {
-    const request = () => ({
-        type: CLIENT_CREATE.REQUEST,
-        payload: {
-            isLoading: true,
-            error: '',
-        },
-    });
-
-    const success = client => ({
-        type: CLIENT_CREATE.SUCCESS,
-        payload: {
-            client,
-            isLoading: false,
-            error: '',
-        },
-    });
-
-    const failure = error => ({
-        type: CLIENT_CREATE.FAILURE,
-        payload: {
-            isLoading: false,
-            error,
-        },
-    });
-
-    return async (dispatch, getState) => {
-        dispatch(request());
-        try {
-            const client = await makeRequestAsync(`/clients`, "POST", clientCreate);
-            dispatch(success(client.data.client));
-            M.toast({html: `${client.data.status}`, classes: 'rounded'});
-        } catch (error) {
-            const message = error.message || error;
-            dispatch(failure({ error: message }));
-        }
-    };
-};
-
-const updateClient = (client_id, clientEdit) => {
+const updateAccount = (client_id, clientEdit) => {
 
     const request = () => ({
-        type: CLIENT_UPDATE.REQUEST,
+        type: ACCOUNT_UPDATE.REQUEST,
         payload: {
             isLoading: true,
             error: '',
@@ -170,7 +130,7 @@ const updateClient = (client_id, clientEdit) => {
     });
 
     const success = (index, client) => ({
-        type: CLIENT_UPDATE.SUCCESS,
+        type: ACCOUNT_UPDATE.SUCCESS,
         payload: {
             client,
             index,
@@ -180,7 +140,7 @@ const updateClient = (client_id, clientEdit) => {
     });
 
     const failure = error => ({
-        type: CLIENT_UPDATE.FAILURE,
+        type: ACCOUNT_UPDATE.FAILURE,
         payload: {
             isLoading: false,
             error,
@@ -208,9 +168,9 @@ const updateClient = (client_id, clientEdit) => {
 };
 
 
-const deleteClient = (client_id) => {
+const deleteAccount= (client_id) => {
     const request = () => ({
-        type: CLIENT_DELETE.REQUEST,
+        type: ACCOUNT_DELETE.REQUEST,
         payload: {
             isLoading: true,
             error: '',
@@ -218,7 +178,7 @@ const deleteClient = (client_id) => {
     });
 
     const success = index => ({
-        type: CLIENT_DELETE.SUCCESS,
+        type: ACCOUNT_DELETE.SUCCESS,
         payload: {
             index,
             isLoading: false,
@@ -227,7 +187,7 @@ const deleteClient = (client_id) => {
     });
 
     const failure = error => ({
-        type: CLIENT_DELETE.FAILURE,
+        type: ACCOUNT_DELETE.FAILURE,
         payload: {
             isLoading: false,
             error,
@@ -252,11 +212,10 @@ const deleteClient = (client_id) => {
     };
 };
 
-export const clientActions = {
-    getAllClient,
+export const accountActions = {
+    getAllAccounts,
     getById,
-    getByIdCredit,
-    createClient,
-    updateClient,
-    deleteClient
+    createAccount,
+    updateAccount,
+    deleteAccount
 }

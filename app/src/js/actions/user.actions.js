@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, LOGOUT, USERS_GETALL, USERS_DELETE } from '../constants/user.constans';
+import { REGISTER, LOGIN, LOGOUT, USERS_GETALL, USERS_DELETE, USERS_ACCOUNT_GETBYID } from '../constants/user.constans';
 import { userService } from '../services/user.service';
 import { makeRequestAsync } from '../services'
 import { history } from '../store';
@@ -37,6 +37,11 @@ const login = (username, password) => {
         dispatch(request());
         try {
             const user = await makeRequestAsync(`/users/login`, "POST", userAut);
+            console.log("%$%&$%&$%&$%&$", user.data.status);
+            if (user.data.status == "Username or password is incorrect") {
+                M.toast({ html: `Username or password is incorrect`, classes: 'rounded' });
+                return dispatch(failure({ error: user.data.status }));
+            }
             dispatch(success(user.data.user));
             localStorage.setItem('user', JSON.stringify(user.data.user));
             history.push('/accounts');
@@ -54,42 +59,50 @@ const logout = () => {
     return { type: LOGOUT.SUCCESS };
 }
 
-const getAll = () => {
-    const request = () => { return { type: USERS_GETALL.REQUEST } }
-    const success = (users) => { return { type: USERS_GETALL.SUCCESS, users } }
-    const failure = (error) => { return { type: USERS_GETALL.FAILURE, error } }
+const getByIdAccount = (user_id) => {
+    const request = () => ({
+        type: USERS_ACCOUNT_GETBYID.REQUEST,
+        payload: {
+            isLoading: true,
+            error: '',
+        },
+    });
 
-    return dispatch => {
+    const success = accounts => ({
+        type: USERS_ACCOUNT_GETBYID.SUCCESS,
+        payload: {
+            accounts,
+            isLoading: false,
+            error: '',
+        },
+    });
+
+    const failure = error => ({
+        type: USERS_ACCOUNT_GETBYID.FAILURE,
+        payload: {
+            isLoading: false,
+            error,
+        },
+    });
+
+    return async (dispatch, getState) => {
         dispatch(request());
-
-        userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error))
-            );
+        try {
+            const user = await makeRequestAsync(`/users/${user_id}/account`, "GET");
+            dispatch(success(user.data.accounts));
+        } catch (error) {
+            const message = error.message || error;
+            dispatch(failure({ error: message }));
+        }
     };
 
+}
+
+const getAll = () => {
 
 }
 
 const _delete = (id) => {
-    const request = (id) => { return { type: USERS_DELETE.REQUEST, id } }
-    const success = (id) => { return { type: USERS_DELETE.SUCCESS, id } }
-    const failure = (id, error) => { return { type: USERS_DELETE.FAILURE, id, error } }
-    return dispatch => {
-        dispatch(request(id));
-
-        userService.delete(id)
-            .then(
-                user => {
-                    dispatch(success(id));
-                },
-                error => {
-                    dispatch(failure(id, error));
-                }
-            );
-    };
-
 
 }
 
@@ -98,5 +111,6 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getByIdAccount,
     delete: _delete
 };
