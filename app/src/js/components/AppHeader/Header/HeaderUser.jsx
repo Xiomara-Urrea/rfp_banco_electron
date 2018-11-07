@@ -12,8 +12,8 @@ const HeaderUser = ({ menu }) => {
                             <img src="/app/public/images/office.jpg" />
                         </div>
                         <Link to="/"><img className="circle" src="/app/public/images/yuna.jpg" /></Link>
-                        <a href="#name"><span className="white-text name">Saaibi Florez</span></a>
-                        <a href="#email"><span className="white-text email">saaibiflorezhernandez@gmail.com</span></a>
+                        <a href="#name"><span className="white-text name">Admin</span></a>
+                        <a href="#email"><span className="white-text email">admin@gmail.com</span></a>
                     </div>
                 </li>
                 <li><Link to="/accounts" className="waves-effect" ><i className="material-icons">business_center</i>Account</Link></li>

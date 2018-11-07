@@ -12,16 +12,17 @@ const Fields = (props) => (
 			autoFocus={true}
 			icon="account_circle"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadConsig}
 		/>
 
 		<ValueAccount
-			id="valueAccount"
-			name="valueAccount"
+			id="valueAccountConsig"
+			name="valueAccountConsig"
 			text="Valor De La Cuenta"
+			type="number"
 			icon="perm_identity"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadConsig}
 		/>
 
 	</div>

@@ -6,7 +6,6 @@ import { userActions } from "../../actions/user.actions";
 
 import Form from './Form';
 import Grid from './Grid';
-import Progress from '../Common/Utils/Progress';
 
 class Account extends Component {
 	constructor(props) {
@@ -23,7 +22,6 @@ class Account extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props.user._id)
 		this.props.dispatch(userActions.getByIdAccount(this.props.user._id));
 	}
 
@@ -31,13 +29,6 @@ class Account extends Component {
 		const { account } = this.state;
 		account.user_id = this.props.user._id ;
 		this.setState({ account });
-	}
-
-	componentWillReceiveProps(newProps) {
-		// const { account } = this.state;
-		// account.firstName = newProps.client.firstName;
-		// account.lastName = newProps.client.lastName;
-		// this.setState({ clientEdit });
 	}
 
 	createAccount = (e) => {

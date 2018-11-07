@@ -15,7 +15,7 @@ accountController.getByIdAccount = async (req, res) => {
 
 accountController.createAccount = async (req, res) => {
     const { numberAccount, stateAccount, valueAccount, user_id } = req.body;
-    
+
     const accountModel = new Account({
         numberAccount, stateAccount, valueAccount
     });
@@ -27,7 +27,6 @@ accountController.createAccount = async (req, res) => {
                 { "$push": { "accounts": accountModel } },
                 { "new": true, "upsert": true }, (err, user) => {
                     if (err) throw err;
-                    console.log(user)
                 }
             );
         }
@@ -35,7 +34,6 @@ accountController.createAccount = async (req, res) => {
     });
 };
 
-// query = { _id: req.params.id };
 accountController.updateAccount = async (req, res) => {
     const { } = req.body;
     const accountUpdate = {
@@ -51,37 +49,47 @@ accountController.updateAccount = async (req, res) => {
 };
 
 accountController.updateAccountConsign = async (req, res) => {
-    updateAccountRC(req, res);
+    updateAccountRC(req, res, "CONSIG");
 
 };
 
 accountController.updateAccountRetire = async (req, res) => {
-    updateAccountRC(req, res);
+    updateAccountRC(req, res, "RETIRE");
 };
 
 accountController.updateAccountTransfer = async (req, res) => {
-    const { valueAccount, valueAccountOne, valueAccountTwo, numberAccountOne, numberAccountTwo } = req.body;
+    const { valueAccount, numberAccountOne, numberAccountTwo } = req.body;
 
-    await Account.findOneAndUpdate({ _id: numberAccountOne }, { valueAccount: valueAccountOne }, { new: true }, (err, account) => {
+    const accountOne = await Account.findOne({ numberAccount: numberAccountOne });
+    const accountTwo = await Account.findOne({ numberAccount: numberAccountTwo });
+    let valueAccountOne = Number(accountOne.valueAccount) - Number(valueAccount);;
+    let valueAccountTwo = Number(accountTwo.valueAccount) + Number(valueAccount);
+
+    await Account.findOneAndUpdate({ numberAccount: numberAccountOne }, { valueAccount: valueAccountOne }, { new: true }, (err, account) => {
         if (err) return res.json({ error: err });
         // res.json({ status: "Account Updated", account });
     });
-    await Account.findOneAndUpdate({ _id: numberAccountTwo }, { valueAccount: valueAccountTwo }, { new: true }, (err, account) => {
+    await Account.findOneAndUpdate({ numberAccount: numberAccountTwo }, { valueAccount: valueAccountTwo }, { new: true }, (err, account) => {
         if (err) return res.json({ error: err });
         res.json({ status: "Account Updated", account });
     });
 };
 
-const updateAccountRC = async (req, res) => {
-    const { valueAccount, stateAccount, numberAccount } = req.body;
+const updateAccountRC = async (req, res, update) => {
+    const { valueAccount, numberAccount } = req.body;
+    const account = await Account.findOne({ numberAccount });
+    let value = 0;
+    if (update == "RETIRE") {
+        value = Number(account.valueAccount) - Number(valueAccount);;
+    } else {
+        value = Number(account.valueAccount) + Number(valueAccount);
+    }
 
-    await Account.findByIdAndUpdate(req.params.id, { valueAccount, stateAccount, numberAccount }, { new: true }, (err, account) => {
+    await Account.findOneAndUpdate({ numberAccount: numberAccount }, { valueAccount: value }, { new: true }, (err, account) => {
         if (err) return res.json({ error: err });
         res.json({ status: "Account Updated", account });
     });
 }
-
-
 
 module.exports = accountController;
 

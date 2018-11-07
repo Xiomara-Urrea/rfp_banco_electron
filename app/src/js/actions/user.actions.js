@@ -37,7 +37,6 @@ const login = (username, password) => {
         dispatch(request());
         try {
             const user = await makeRequestAsync(`/users/login`, "POST", userAut);
-            console.log("%$%&$%&$%&$%&$", user.data.status);
             if (user.data.status == "Username or password is incorrect") {
                 M.toast({ html: `Username or password is incorrect`, classes: 'rounded' });
                 return dispatch(failure({ error: user.data.status }));

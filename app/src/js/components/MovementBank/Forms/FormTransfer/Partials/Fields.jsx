@@ -7,40 +7,29 @@ import NumberAccountTwo from '../../../../Common/Input';
 
 const Fields = (props) => (
 	<div>
-		<ValueAccountOne
-			id="valueAccountOne"
-			name="valueAccountOne"
-			text="Valor De La Cuenta 1"
-			autoFocus={true}
-			icon="account_circle"
-			classNameIcon="prefix"
-			onChange={props.loadUsers}
-		/>
-
-		<ValueAccountTwo
-			id="valueAccountTwo"
-			name="valueAccountTwo"
-			text="Valor De La Cuenta 2 "
-			icon="gps_fixed"
-			classNameIcon="prefix"
-			onChange={props.loadUsers}
-		/>
-		
 		<NumberAccountOne
 			id="numberAccountOne"
 			name="numberAccountOne"
-			text="Numero De La Cuenta 1"
+			text="De:"
 			icon="contact_phone"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadTranfer}
 		/>
 		<NumberAccountTwo
 			id="numberAccountTwo"
 			name="numberAccountTwo"
-			text="Numero De La Cuenta 2"
+			text="Para:"
 			icon="email"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadTranfer}
+		/>
+		<ValueAccountOne
+			id="valueAccount"
+			name="valueAccount"
+			text="Valor de la transferencia"
+			icon="account_circle"
+			classNameIcon="prefix"
+			onChange={props.loadTranfer}
 		/>
 
 	</div>

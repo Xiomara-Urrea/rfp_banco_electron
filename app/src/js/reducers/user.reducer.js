@@ -26,7 +26,6 @@ export function users(state = initialState, action) {
       };
     case USERS_ACCOUNT_GETBYID.SUCCESS: {
       const { accounts } = payload;
-      console.log("object", payload)
       return {
         ...state,
         ...payload

@@ -1,6 +1,7 @@
 import findIndex from 'lodash/findIndex'
+import { history } from '../store';
 import { makeRequestAsync } from '../services'
-import { ACCOUNT_GET, ACCOUNT_GETBYID, ACCOUNT_CREATE, ACCOUNT_UPDATE, ACCOUNT_DELETE } from '../constants/account.constans';
+import { ACCOUNT_GET, ACCOUNT_GETBYID, ACCOUNT_CREATE, ACCOUNT_UPDATE_CONSIG, ACCOUNT_UPDATE_RETIRE, ACCOUNT_UPDATE_TRANSFER, ACCOUNT_DELETE } from '../constants/account.constans';
 
 
 const getAllAccounts = () => {
@@ -33,8 +34,8 @@ const getAllAccounts = () => {
     return async (dispatch, getState) => {
         dispatch(request());
         try {
-            const clients = await makeRequestAsync(`/clients`, "GET");
-            dispatch(success(clients.data));
+            const accounts = await makeRequestAsync(`/accounts`, "GET");
+            dispatch(success(accounts.data));
         } catch (error) {
             const message = error.message || error;
             dispatch(failure({ error: message }));
@@ -71,8 +72,8 @@ const getById = (id) => {
     return async (dispatch, getState) => {
         dispatch(request());
         try {
-            const client = await makeRequestAsync(`/clients/${id}`, "GET");
-            dispatch(success(client.data));
+            const account = await makeRequestAsync(`/accounts/${id}`, "GET");
+            dispatch(success(account.data));
         } catch (error) {
             const message = error.message || error;
             dispatch(failure({ error: message }));
@@ -111,7 +112,7 @@ const createAccount = (accountCreate) => {
         try {
             const account = await makeRequestAsync(`/accounts`, "POST", accountCreate);
             dispatch(success(account.data.account));
-            M.toast({html: `${account.data.status}`, classes: 'rounded'});
+            M.toast({ html: `${account.data.status}`, classes: 'rounded' });
         } catch (error) {
             const message = error.message || error;
             dispatch(failure({ error: message }));
@@ -119,20 +120,20 @@ const createAccount = (accountCreate) => {
     };
 };
 
-const updateAccount = (client_id, clientEdit) => {
+const updateAccountConsig = (accountUpdate) => {
 
     const request = () => ({
-        type: ACCOUNT_UPDATE.REQUEST,
+        type: ACCOUNT_UPDATE_CONSIG.REQUEST,
         payload: {
             isLoading: true,
             error: '',
         },
     });
 
-    const success = (index, client) => ({
-        type: ACCOUNT_UPDATE.SUCCESS,
+    const success = (index, account) => ({
+        type: ACCOUNT_UPDATE_CONSIG.SUCCESS,
         payload: {
-            client,
+            account,
             index,
             isLoading: false,
             error: '',
@@ -140,7 +141,7 @@ const updateAccount = (client_id, clientEdit) => {
     });
 
     const failure = error => ({
-        type: ACCOUNT_UPDATE.FAILURE,
+        type: ACCOUNT_UPDATE_CONSIG.FAILURE,
         payload: {
             isLoading: false,
             error,
@@ -150,25 +151,113 @@ const updateAccount = (client_id, clientEdit) => {
     return async (dispatch, getState) => {
         dispatch(request());
         try {
-            const { clients } = getState().client;
-            const index = findIndex(clients, { _id: client_id });
-
-            if (index === -1) return dispatch(failure("Client Not found"));
-
-            const clientUpdate = { firstName : clientEdit.firstName, lastName : clientEdit.lastName };
-            const client = await makeRequestAsync(`/clients/${client_id}/client`, "PUT", clientUpdate);
-            console.log(client)
-            dispatch(success(index, client.data.client));
-            M.toast({html: `${client.data.status}`, classes: 'rounded'});
+            const accountUp = {
+                numberAccount: accountUpdate.numberAccount,
+                valueAccount: accountUpdate.valueAccountConsig
+            };
+            const account = await makeRequestAsync(`/accounts/${accountUpdate.numberAccount}/consign`, "PUT", accountUp);
+            dispatch(success(account.data.account));
+            history.push('/accounts');
+            M.toast({ html: `${account.data.status}`, classes: 'rounded' });
         } catch (error) {
             const message = error.message || error;
+            M.toast({ html: `${message}`, classes: 'rounded' });
             dispatch(failure({ error: message }));
         }
     };
 };
 
+const updateAccountRetire = (accountUpdate) => {
 
-const deleteAccount= (client_id) => {
+    const request = () => ({
+        type: ACCOUNT_UPDATE_RETIRE.REQUEST,
+        payload: {
+            isLoading: true,
+            error: '',
+        },
+    });
+
+    const success = (index, account) => ({
+        type: ACCOUNT_UPDATE_RETIRE.SUCCESS,
+        payload: {
+            account,
+            index,
+            isLoading: false,
+            error: '',
+        },
+    });
+
+    const failure = error => ({
+        type: ACCOUNT_UPDATE_RETIRE.FAILURE,
+        payload: {
+            isLoading: false,
+            error,
+        },
+    });
+
+    return async (dispatch, getState) => {
+        dispatch(request());
+        try {
+            const accountUp = {
+                numberAccount: accountUpdate.numberAccountRetire,
+                valueAccount: accountUpdate.valueAccountRetire
+            };
+            const account = await makeRequestAsync(`/accounts/${accountUpdate.numberAccount}/retire`, "PUT", accountUp);
+            dispatch(success(account.data.account));
+            history.push('/accounts');
+            M.toast({ html: `${account.data.status}`, classes: 'rounded' });
+        } catch (error) {
+            const message = error.message || error;
+            M.toast({ html: `${message}`, classes: 'rounded' });
+            dispatch(failure({ error: message }));
+        }
+    };
+};
+
+const updateAccountTranfer = (accountUpdate) => {
+
+    const request = () => ({
+        type: ACCOUNT_UPDATE_TRANSFER.REQUEST,
+        payload: {
+            isLoading: true,
+            error: '',
+        },
+    });
+
+    const success = (index, account) => ({
+        type: ACCOUNT_UPDATE_TRANSFER.SUCCESS,
+        payload: {
+            account,
+            index,
+            isLoading: false,
+            error: '',
+        },
+    });
+
+    const failure = error => ({
+        type: ACCOUNT_UPDATE_TRANSFER.FAILURE,
+        payload: {
+            isLoading: false,
+            error,
+        },
+    });
+
+    return async (dispatch, getState) => {
+        dispatch(request());
+        try {
+            const account = await makeRequestAsync(`/accounts`, "PUT", accountUpdate);
+            dispatch(success(account.data.account));
+            history.push('/accounts');
+            M.toast({ html: `${account.data.status}`, classes: 'rounded' });
+        } catch (error) {
+            const message = error.message || error;
+            M.toast({ html: `${message}`, classes: 'rounded' });
+            dispatch(failure({ error: message }));
+        }
+    };
+};
+
+const deleteAccount = (client_id) => {
     const request = () => ({
         type: ACCOUNT_DELETE.REQUEST,
         payload: {
@@ -204,7 +293,7 @@ const deleteAccount= (client_id) => {
 
             const client = await makeRequestAsync(`/clients/${client_id}`, "DELETE");
             dispatch(success(index));
-            M.toast({html: `${client.data.status}`, classes: 'rounded'});
+            M.toast({ html: `${client.data.status}`, classes: 'rounded' });
         } catch (error) {
             const message = error.message || error;
             dispatch(failure(message));
@@ -216,6 +305,8 @@ export const accountActions = {
     getAllAccounts,
     getById,
     createAccount,
-    updateAccount,
+    updateAccountConsig,
+    updateAccountRetire,
+    updateAccountTranfer,
     deleteAccount
 }

@@ -1,4 +1,4 @@
-import { ACCOUNT_GET, ACCOUNT_GETBYID, ACCOUNT_CREATE, ACCOUNT_UPDATE, ACCOUNT_DELETE } from '../constants/account.constans';
+import { ACCOUNT_GET, ACCOUNT_GETBYID, ACCOUNT_CREATE, ACCOUNT_UPDATE_CONSIG, ACCOUNT_UPDATE_RETIRE, ACCOUNT_UPDATE_TRANSFER, ACCOUNT_DELETE } from '../constants/account.constans';
 
 const initialState = {
   accounts: [],
@@ -18,8 +18,14 @@ export function account(state = initialState, action) {
     case ACCOUNT_GETBYID.FAILURE:
     case ACCOUNT_CREATE.REQUEST:
     case ACCOUNT_CREATE.FAILURE:
-    case ACCOUNT_UPDATE.REQUEST:
-    case ACCOUNT_UPDATE.FAILURE:
+    case ACCOUNT_UPDATE_CONSIG.REQUEST:
+    case ACCOUNT_UPDATE_CONSIG.FAILURE:
+    case ACCOUNT_UPDATE_RETIRE.REQUEST:
+    case ACCOUNT_UPDATE_RETIRE.SUCCESS:
+    case ACCOUNT_UPDATE_RETIRE.FAILURE:
+    case ACCOUNT_UPDATE_TRANSFER.REQUEST:
+    case ACCOUNT_UPDATE_TRANSFER.SUCCESS:
+    case ACCOUNT_UPDATE_TRANSFER.FAILURE:
     case ACCOUNT_DELETE.REQUEST:
     case ACCOUNT_DELETE.FAILURE:
       return {
@@ -41,14 +47,14 @@ export function account(state = initialState, action) {
       };
     }
 
-    case ACCOUNT_UPDATE.SUCCESS: {
-      const { client, index, ...propEstados } = payload;
+    case ACCOUNT_UPDATE_CONSIG.SUCCESS: {
+      const { account, index, ...propEstados } = payload;
       return {
         ...state,
         ...propEstados,
         accounts: [
           ...state.accounts.slice(0, index),
-          client,
+          account,
           ...state.accounts.slice(index + 1),
         ],
       };

@@ -11,7 +11,7 @@ const ActionBar = (props) => (
 				texto="Retirar"
 				icon="send"
 				classNameIcon="right"
-				onClick={props.createUsers}
+				onClick={props.updateRetire}
 			/>
 		</div>
 		<div className="input-field col s6 align-center">

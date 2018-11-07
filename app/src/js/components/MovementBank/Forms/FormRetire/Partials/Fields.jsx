@@ -6,22 +6,22 @@ import ValueAccount from '../../../../Common/Input';
 const Fields = (props) => (
 	<div>
 		<NumeroCuenta
-			id="numberAccount"
-			name="numberAccount"
+			id="numberAccountRetire"
+			name="numberAccountRetire"
 			text="Numero de Cuenta"
-			autoFocus={true}
 			icon="account_circle"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadRetire}
 		/>
 
 		<ValueAccount
-			id="valueAccount"
-			name="valueAccount"
+			id="valueAccountRetire"
+			name="valueAccountRetire"
 			text="Valor De Cuenta"
+			type="number"
 			icon="perm_identity"
 			classNameIcon="prefix"
-			onChange={props.loadUsers}
+			onChange={props.loadRetire}
 		/>
 
 	</div>
