@@ -7,7 +7,7 @@ class AppUsers extends Component {
 	render() {
 		return (
 			<div className="container">
-				<AppHeader name="USUARIOS" />
+				<AppHeader name="MovimientoBancario" />
 				<Users />
 			</div>
 		);

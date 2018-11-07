@@ -17,7 +17,7 @@ const HeaderUser = ({ menu }) => {
                     </div>
                 </li>
                 <li><Link to="/accounts" className="waves-effect" ><i className="material-icons">business_center</i>Account</Link></li>
-                <li><Link to="/users"><i className="material-icons">group</i>Usuarios</Link></li>
+                <li><Link to="/movementbank"><i className="material-icons">group</i>MovimientoBancario</Link></li>
                 <li><Link to="/login"><i className="material-icons">system_update_alt</i>Logout</Link></li>
             </ul>
         )
