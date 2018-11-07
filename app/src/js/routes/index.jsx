@@ -10,7 +10,7 @@ import { HomePage } from "../components/Home";
 import { AppRegister } from "../components/Authentication/Register";
 import { AppLogin } from "../components/Authentication/Login";
 import { AppAccount } from "../components/Account/RoutComp";
-import { AppUsers } from "../components/Users/RoutComp";
+import { AppMovementBank } from "../components/MovementBank/RoutComp";
 
 const Routes = () => {
   return (
@@ -22,7 +22,7 @@ const Routes = () => {
           <Route path="/register" component={AppRegister} />
           <Route path="/login" component={AppLogin} />
           <PrivateRoute path="/accounts" component={AppAccount} />
-          <PrivateRoute path="/users" component={AppUsers} />
+          <PrivateRoute path="/movementbank" component={AppMovementBank} />
         </div>
       </Router>
     </div>
@@ -30,6 +30,3 @@ const Routes = () => {
 }
 
 export default Routes
-
-// asd$123caballero
-// mdcaballero@unac.edu.co

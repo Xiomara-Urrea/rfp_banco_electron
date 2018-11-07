@@ -26,7 +26,7 @@ const HeaderUser = ({ menu }) => {
         return (
             < ul className="right hide-on-med-and-down" >
                 <li><Link to="/accounts">Account</Link></li>
-                <li><Link to="/users">Users</Link></li>
+                <li><Link to="/movementbank">MovimientoBancario</Link></li>
                 <li><Link to="/login">Logout</Link></li>
             </ul >
         );

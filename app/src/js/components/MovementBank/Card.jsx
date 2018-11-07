@@ -1,5 +1,4 @@
 import React from 'react';
-import { Collapsible } from 'react-materialize';
 
 import FormConsig from './Forms/FormConsig';
 import FormRetire from './Forms/FormRetire';

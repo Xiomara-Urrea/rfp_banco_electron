@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Card from './Collapsibles';
+import Card from './Card';
 
-class Users extends Component {
+class Movement extends Component {
 	render() {
 		const { } = this.props;
 		return (
@@ -15,4 +15,4 @@ class Users extends Component {
 const mapStateToProps = (state) => ({
 });
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps)(Movement);

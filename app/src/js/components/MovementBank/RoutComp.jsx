@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
 import AppHeader from '../AppHeader';
-import Users from '.';
+import Movement from '.';
 
-class AppUsers extends Component {
+class AppMovementBank extends Component {
 	render() {
 		return (
 			<div className="container">
 				<AppHeader name="MovimientoBancario" />
-				<Users />
+				<Movement />
 			</div>
 		);
 	}
 }
 
-export { AppUsers };
+export { AppMovementBank };
